@@ -1,0 +1,30 @@
+{
+  "name": "program",
+  "version": "1.0.0",
+  "description": "Bigtem Makine Üretim Makineleri Takip Sistemi",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "js",
+    "nodejs"
+  ],
+  "author": "CanBayraker",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^5.9.14",
+    "nodemon": "^2.0.4",
+    "nodes7": "^0.3.11",
+    "nodes7comm": "^1.0.3",
+    "s7client": "^1.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/canbayraker/bigtemuretim.git"
+  }
+}

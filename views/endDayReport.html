@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>Bigtem Makine - Üretim Takibi</title>
+<!-- Include fusioncharts core library -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css">
+<!-- Include fusion theme -->
+<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+<script type="text/javascript"></script>
+</head>
+<body>
+
+
+    <button id="getData">Veri Al</button>
+
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Makine</th>
+                <th>Operatör</th>
+                <th>Toplam Çalışma</th>
+                <th>Toplam Bekleme</th>
+                <th>Toplam Durma</th>
+            </tr>
+            
+        </thead>
+        <tbody>
+            <tr id="Makine1">
+                <td>1</td>
+                <td>Makine 1</td>
+                <td>Can Bayraker</td>
+                <td>TEST1</td>
+                <td>TEST</td>
+                <td>TEST</td>
+            </tr>
+            <tr id="Makine2">
+                <td>2</td>
+                <td>Makine 2</td>
+                <td>Cağrı Kayalı</td>
+                <td></td>
+                <td></td>
+                <td></td>            
+            </tr>
+            <tr id="Makine3">
+                <td>3</td>
+                <td>Makine 3</td>
+                <td>Burak Kale</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine4">
+                <td>4</td>
+                <td>Makine 4</td>
+                <td>Mustafa Yılmaz</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine5">
+                <td>5</td>
+                <td>Makine 5</td>
+                <td>Mehmet Bayraker</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine6">
+                <td>6</td>
+                <td>Makine 6</td>
+                <td>Ahmet Yılmaz</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine7">
+                <td>7</td>
+                <td>Makine 7</td>
+                <td>Güneş Dönmez</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine8">
+                <td>8</td>
+                <td>Makine 8</td>
+                <td>Uluç Okur</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine9">
+                <td>9</td>
+                <td>Makine 9</td>
+                <td>Deniz Tuğrul</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="Makine10">
+                <td>10</td>
+                <td>Makine 10</td>
+                <td>Tuncay Gençel</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            
+            
+        </tbody>
+        
+    </table>
+
+
+
+
+    <script type="module" src="endDayReport.js"></script>
+    <script type="module" src="Request.js"></script>
+
+</body>
+</html>

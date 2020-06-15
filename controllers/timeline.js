@@ -4,15 +4,15 @@ const { updateWithActualTime } = require("../helpers/timeline/updateWithActualTi
 const Timeline = require("../models/Timeline");
 
 
-
-
 const createTimeline = asyncErrorWrapper(async (req,res,next) => {
 
     const { label , processid , start , end , bordercolor , color , id } = req.body;
 
-    const lastID = await Timeline.findOne({processid: processid}).sort({ id: -1}).limit(1);     // Son id ye sahip elemanı buluyorum
-    const newID = (parseInt(lastID.id)) + 1;                                                    // Son id'li elemanın id'sine 1 ekliyorum
+    // ID'ye 1 eklemek için son record aranıyor
+    const lastRecord = await Timeline.findOne({processid: processid}).sort({ id: -1}).limit(1);     // Son id ye sahip elemanı buluyorum
+    const newID = (parseInt(lastRecord.id)) + 1;                                                    // Son id'li elemanın id'sine 1 ekliyorum
 
+    // +1 ID'ye sahip yeni eleman DB'ye ekleniyor
     const newTimeline = await Timeline.create({
         label,
         processid,
@@ -33,7 +33,7 @@ const createTimeline = asyncErrorWrapper(async (req,res,next) => {
 
 
 const getAllTimelines = asyncErrorWrapper(async (req,res,next) => {
-
+    
 
     const allTimelines = await Timeline.find();
 
@@ -46,13 +46,19 @@ const getAllTimelines = asyncErrorWrapper(async (req,res,next) => {
 
 const updateEnd = asyncErrorWrapper(async (req,res,next) => {
 
-    const { processid , id } = req.body;
+    const { processid } = req.body;
+    const lastRecord = await Timeline.findOne({processid: processid}).sort({ id: -1}).limit(1);     // Request'ten gelen processid'ye sahip elemanlar("D") arasından, son id ye sahip elemanı buluyorum
 
-    const timeLine = await Timeline.findOne({ processid: processid, id: id });  // İlgili processid ve id 'ye sahip elemanı bul
-
-    updateWithActualTime(timeLine,res);
+    updateWithActualTime(lastRecord,res);
        
 
+});
+
+
+const deleteRecord = asyncErrorWrapper(async (req,res,next) => {
+    const { id } = req.body;
+    console.log("delete id" + id);
+    const deletedReport = await Timeline.deleteMany({id: id});    
 });
 
 
@@ -61,5 +67,6 @@ const updateEnd = asyncErrorWrapper(async (req,res,next) => {
 module.exports = {
     createTimeline,
     getAllTimelines,
-    updateEnd
+    updateEnd,
+    deleteRecord
 };

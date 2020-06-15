@@ -1,9 +1,7 @@
 
 // IMPORT
-import {Request} from "../views/Request.js";    
+import {Request} from "./Request.js";    
 const request = new Request();
-
-  
 
 const dataSource = {
     chart: {
@@ -124,9 +122,47 @@ const dataSource = {
 
 
 
-// *** --- REQUEST - GET ALL --- *** //
+
+
+
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  PLC - GET MACHINE STATUS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 setInterval(() => {
-  request.get("http://localhost:5050/api/timeline/getAll")
+
+  const data = {
+    processid : "D"
+  };
+
+  request.post("https://mgcsolutions.net/api/timeline/getMachineStatus",data)
+  .then(async data => {
+  const allMachineStates = data.data[0];
+  const oldVal = data.old;
+  console.log("machine 4 data"+ allMachineStates.Machine4 + "old val:" + oldVal);
+
+  // DB'deki son timeline record ile plc'den geleni karşılaştırıyorum
+    if (allMachineStates.Machine4 == oldVal) {
+      console.log("VERİ AYNI : UPDATE");
+      update();
+    } else {
+      console.log("VERİ FARKLI : YENI");
+      createNew(allMachineStates.Machine4);
+    }
+    
+  })
+  .catch(err => console.log(err));
+}, 1000);
+
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
+
+
+
+
+
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - GET ALL  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
+setInterval(() => {
+  request.get("https://mgcsolutions.net/api/timeline/getAll")
   .then(async data => {
 
   const test1 = data.data;
@@ -137,92 +173,113 @@ setInterval(() => {
   .catch(err => console.log(err));
 
 }, 1000);
-// *************************** //
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 
 
 
-// *** --- REQUEST - UPDATE END TIME --- *** //
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - UPDATE END TIME  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 function update(){
 
   const data = {
-    processid : "D",
-    id : "10"
+    processid : "D"
   };
 
-  request.put("http://localhost:5050/api/timeline/updateEnd",data)
+  request.put("https://mgcsolutions.net/api/timeline/updateEnd",data)
   .then(data => console.log(data))
   .catch(err => console.log(err));
-
 }
-
-document.getElementById("btnUpdate").addEventListener("click",update);
-// *************************** //
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 
 
 
 
-// *** --- REQUEST - CREATE TIMELINE  --- *** //
 
-document.getElementById("btnCreateKapalı").addEventListener("click",()=>{
-  createNew();
-});
 
-function createNew(){
+function createData(newData){
+  request.post("https://mgcsolutions.net/api/timeline/create",newData)
+    .then(async data => {
+    const test1 = data;
+    console.log(test1); 
+    })
+    .catch(err => console.log(err));
+  }
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - CREATE TIMELINE  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   //
+function createNew(newRecord){
 
   var currentDateTime = new Date();
+  
+  if (newRecord == 0) {
 
-
-
-   var newData = {
+     const newData = {
       label       : "Kapalı",
       processid   : "D",
       start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
       end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
       bordercolor : "#62B58D",
-      color       : "#F2726F",
+      color       : "#F2726F"
     };
+    createData(newData);
+  }
+
+    if (newRecord == 1) {
+
+      const newData = {
+        label       : "Bekleme",
+        processid   : "D",
+        start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+        end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+        bordercolor : "#62B58D",
+        color       : "#FFC533"
+      };
+      createData(newData);
+    }
+
+    if (newRecord == 2) {
+
+      const newData = {
+      label       : "Üretim",
+      processid   : "D",
+      start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+      end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+      bordercolor : "#62B58D",
+      color       : "#62B58D"
+      };
+      createData(newData);
+    }
     
+}
 
-  // if (plcData == 1) {
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 
-  //   newData = {
-  //     label       : "Bekleme",
-  //     processid   : "C",
-  //     start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
-  //     end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
-  //     bordercolor : "#62B58D",
-  //     color       : "#F2726F",
-  //     id          : "9"
-  //   };
-  // }
 
-  //   if (plcData == 2) {
 
-  //     newData = {
-  //       label       : "Üretim",
-  //       processid   : "C",
-  //       start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
-  //       end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
-  //       bordercolor : "#62B58D",
-  //       color       : "#F2726F",
-  //       id          : "9"
-  //     };
-  //   }
-    
-  
-  
 
-  request.post("http://localhost:5050/api/timeline/create",newData)
+document.getElementById("btnCreateKapalı").addEventListener("click",() => {
+  alert("İlk Kayıt");
+  createFirstData();
+});
+
+function createFirstData(){
+
+  var currentDateTime = new Date();
+  const newData = {
+    label       : "Kapalı",
+    processid   : "D",
+    start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+    end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+    bordercolor : "#62B58D",
+    color       : "#F2726F"
+  };
+
+  request.post("https://mgcsolutions.net/api/timeline/create",newData)
   .then(async data => {
   const test1 = data;
   console.log(test1); 
-
   })
   .catch(err => console.log(err));
-
 }
 
-// ************************************************** //
 
 
 
@@ -232,16 +289,13 @@ function createNew(){
 
 
 
-
-
-
-// *** --- FUSION CHART CALL --- *** //
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  FUSION CHART CALL  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 var myChart = new FusionCharts({
   type: "gantt",
   renderAt: "chart-container",
   width: "100%",
   height: "100%",
-  dataFormat: "json"
+  dataFormat: "json",
 });
 
 myChart.render();
@@ -250,5 +304,5 @@ myChart.render();
 setInterval(() => {
   myChart.setChartData(dataSource);   // dataSource methodunun db'de değiştirdikçe burada render'a gerek kalmadan grafiğin yenilenmesini sağlıyorum
 }, 100);
-// ******************************* //
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 

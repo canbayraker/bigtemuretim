@@ -4,51 +4,26 @@ const Schema = mongoose.Schema;
 
 const MachineStateSchema = new Schema({
 
-    Machine1: {
+    Id: {
         type       :   Number
     },
-    Machine2: {
-        type       :   Number
-    },
-    Machine3: {
-        type       :   Number
-    },
-    Machine4: {
-        type       :   Number
-    },
-    Machine5: {
-        type       :   Number
-    },
-    Machine6: {
-        type       :   Number
-    },
-    Machine7: {
-        type       :   Number
-    },
-    Machine8: {
-        type       :   Number
-    },
-    Machine9: {
-        type       :   Number
-    },
-    Machine10: {
-        type       :   Number
-    },
-    Machine11: {
-        type       :   Number
-    },
-    Machine12: {
-        type       :   Number
-    },
-    Machine13: {
-        type       :   Number
-    },
-    Machine14: {
-        type       :   Number
-    },
-    Machine15: {
-        type       :   Number
-    }  
+    Machine: {
+        M1       :   Number,
+        M2       :   Number,
+        M3       :   Number,
+        M4       :   Number,
+        M5       :   Number,
+        M6       :   Number,
+        M7       :   Number,
+        M8       :   Number,
+        M9       :   Number,
+        M10       :   Number,
+        M11       :   Number,
+        M12       :   Number,
+        M13       :   Number,
+        M14       :   Number,
+        M15       :   Number,
+    }
 });
 
 module.exports = mongoose.model("MachineState",MachineStateSchema);

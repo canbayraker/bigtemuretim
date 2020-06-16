@@ -1,6 +1,6 @@
 const express = require("express");
 const { createTimeline , getAllTimelines , updateEnd , deleteRecord } = require("../controllers/timeline");
-const { getMachineStatus } = require("../controllers/getMachineStatus");
+const { getMachineStatus , createMachineStatus } = require("../controllers/getMachineStatus");
 const router = express();
 
 
@@ -9,6 +9,7 @@ router.get("/getAll",getAllTimelines);
 router.put("/updateEnd",updateEnd);
 router.post("/getMachineStatus",getMachineStatus);
 router.get("/deleteRecord",deleteRecord);
+router.get("/createMachineStatus",createMachineStatus);
 
 
 module.exports = router;

@@ -135,18 +135,20 @@ setInterval(() => {
 
   request.post("https://mgcsolutions.net/api/timeline/getMachineStatus",data)
   .then(async data => {
-  const allMachineStates = data.data[0];
+    console.log("data:  " + data.data);
+  const allMachineStates = data.data.Machine;
+  console.log("allMachineStates :   " + allMachineStates);
   const oldVal = data.old;
-  console.log("machine 4 data"+ allMachineStates.Machine4 + "old val:" + oldVal);
+  console.log("machine 4 data"+ allMachineStates.M4 + "old val:" + oldVal);
 
   // DB'deki son timeline record ile plc'den geleni karşılaştırıyorum
-    if (allMachineStates.Machine4 == oldVal) {
+    if (allMachineStates.M4 == oldVal) {
       console.log("VERİ AYNI : UPDATE");
       update();
     } else {
       console.log("VERİ FARKLI : YENI");
-      createNew(allMachineStates.Machine4);
-    }
+      createNew(allMachineStates.M4);
+    }s
     
   })
   .catch(err => console.log(err));

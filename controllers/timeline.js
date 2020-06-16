@@ -6,10 +6,10 @@ const Timeline = require("../models/Timeline");
 
 const createTimeline = asyncErrorWrapper(async (req,res,next) => {
 
-    const { label , processid , start , end , bordercolor , color , id } = req.body;
+    const { label , processid , start , end , bordercolor , color } = req.body;
 
     // ID'ye 1 eklemek için son record aranıyor
-    const lastRecord = await Timeline.findOne({processid: processid}).sort({ id: -1}).limit(1);     // Son id ye sahip elemanı buluyorum
+    const lastRecord = await Timeline.findOne({processid: processid}).sort({ _id: -1}).limit(1);     // Son id ye sahip elemanı buluyorum
     const newID = (parseInt(lastRecord.id)) + 1;                                                    // Son id'li elemanın id'sine 1 ekliyorum
 
     // +1 ID'ye sahip yeni eleman DB'ye ekleniyor

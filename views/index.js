@@ -136,10 +136,10 @@ setInterval(() => {
   request.post("https://mgcsolutions.net/api/timeline/getMachineStatus",data)
   .then(async data => {
     console.log("data:  " + data.data);
-  const allMachineStates = data.data.Machine;
-  console.log("allMachineStates :   " + allMachineStates);
-  const oldVal = data.old;
-  console.log("machine 4 data"+ allMachineStates.M4 + "old val:" + oldVal);
+    const allMachineStates = data.data.Machine;
+    console.log("allMachineStates :   " + allMachineStates);
+    const oldVal = data.old;
+    console.log("machine 4 data"+ allMachineStates.M4 + "old val:" + oldVal);
 
   // DB'deki son timeline record ile plc'den geleni karşılaştırıyorum
     if (allMachineStates.M4 == oldVal) {
@@ -148,7 +148,7 @@ setInterval(() => {
     } else {
       console.log("VERİ FARKLI : YENI");
       createNew(allMachineStates.M4);
-    }s
+    }
     
   })
   .catch(err => console.log(err));
@@ -197,16 +197,20 @@ function update(){
 
 
 
+
+
+// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - CREATE TIMELINE  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   //
+
 function createData(newData){
   request.post("https://mgcsolutions.net/api/timeline/create",newData)
     .then(async data => {
     const test1 = data;
-    console.log(test1); 
+    console.log("Create Response :  " +test1); 
     })
     .catch(err => console.log(err));
   }
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - CREATE TIMELINE  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   //
+
 function createNew(newRecord){
 
   var currentDateTime = new Date();
@@ -252,35 +256,39 @@ function createNew(newRecord){
     
 }
 
+
+
+
 // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 
 
 
 
-document.getElementById("btnCreateKapalı").addEventListener("click",() => {
-  alert("İlk Kayıt");
-  createFirstData();
-});
+// document.getElementById("btnCreateKapalı").addEventListener("click",() => {
+//   alert("İlk Kayıt");
+//   createFirstData();
+// });
 
-function createFirstData(){
+// function createFirstData(){
 
-  var currentDateTime = new Date();
-  const newData = {
-    label       : "Kapalı",
-    processid   : "D",
-    start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
-    end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
-    bordercolor : "#62B58D",
-    color       : "#F2726F"
-  };
+//   var currentDateTime = new Date();
+//   const newData = {
+//     label       : "Kapalı",
+//     processid   : "D",
+//     start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+//     end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
+//     bordercolor : "#62B58D",
+//     color       : "#F2726F",
+//     id          : "1"
+//   };
 
-  request.post("https://mgcsolutions.net/api/timeline/create",newData)
-  .then(async data => {
-  const test1 = data;
-  console.log(test1); 
-  })
-  .catch(err => console.log(err));
-}
+//   request.post("https://mgcsolutions.net/api/timeline/create",newData)
+//   .then(async data => {
+//   const test1 = data;
+//   console.log(test1); 
+//   })
+//   .catch(err => console.log(err));
+// }
 
 
 
@@ -296,7 +304,7 @@ var myChart = new FusionCharts({
   type: "gantt",
   renderAt: "chart-container",
   width: "100%",
-  height: "100%",
+  height: "90%",
   dataFormat: "json",
 });
 

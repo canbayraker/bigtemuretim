@@ -43,7 +43,7 @@ const getMachineStatus = asyncErrorWrapper(async (req,res,next) => {
     const allMachineStates = await MachineState.findOne();
 
     const { processid } = req.body;
-    const lastRecord = await Timeline.findOne({processid: processid}).sort({ id: -1}).limit(1);
+    const lastRecord = await Timeline.findOne({processid: processid}).sort({ _id: -1}).limit(1);
 
     if (lastRecord.label == "Kapalı") {
         oldVal = 0;

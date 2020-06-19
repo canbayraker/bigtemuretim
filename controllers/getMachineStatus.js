@@ -45,15 +45,16 @@ const getMachineStatus = asyncErrorWrapper(async (req,res,next) => {
     const { processid } = req.body;
     const lastRecord = await Timeline.findOne({processid: processid}).sort({ _id: -1}).limit(1);
 
-    if (lastRecord.label == "Kapalı") {
+    if (lastRecord.label === "Kapalı") {
         oldVal = 0;
-    }
+    }   
     if (lastRecord.label == "Bekleme") {
         oldVal = 1;
     }
     if (lastRecord.label == "Üretim") {
         oldVal = 2;
     }
+    
 
     return res
     .status(200)

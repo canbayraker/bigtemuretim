@@ -4,12 +4,43 @@ const { updateWithActualTime } = require("../helpers/timeline/updateWithActualTi
 const Timeline = require("../models/Timeline");
 
 
+
+
+
+
+const createFirstTimelines = asyncErrorWrapper(async (req,res,next) => {
+
+    const { label , processid , start , end , bordercolor , color , id } = req.body;
+
+    const newTimeline = await Timeline.create({
+        label,
+        processid,
+        start,
+        end,
+        bordercolor,
+        color,
+        id
+    });
+    sendResponseToClient(newTimeline,res);
+    console.log("Console Report:    First Timeline created with ProcessID: " + processid + "and with id: " + id);
+
+});
+
+
+
+
+
+
+
+
+
 const createTimeline = asyncErrorWrapper(async (req,res,next) => {
 
-    const { label , processid , start , end , bordercolor , color } = req.body;
+    const { label , processid , start , end , bordercolor , color , id } = req.body;
 
     // ID'ye 1 eklemek için son record aranıyor
     const lastRecord = await Timeline.findOne({processid: processid}).sort({ _id: -1}).limit(1);     // Son id ye sahip elemanı buluyorum
+    console.log("LASR RECORD:  " + lastRecord);
     const newID = (parseInt(lastRecord.id)) + 1;                                                    // Son id'li elemanın id'sine 1 ekliyorum
 
     // +1 ID'ye sahip yeni eleman DB'ye ekleniyor
@@ -65,6 +96,7 @@ const deleteRecord = asyncErrorWrapper(async (req,res,next) => {
 
 
 module.exports = {
+    createFirstTimelines,
     createTimeline,
     getAllTimelines,
     updateEnd,

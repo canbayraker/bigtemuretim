@@ -40,7 +40,6 @@ const createTimeline = asyncErrorWrapper(async (req,res,next) => {
 
     // ID'ye 1 eklemek için son record aranıyor
     const lastRecord = await Timeline.findOne({processid: processid}).sort({ _id: -1}).limit(1);     // Son id ye sahip elemanı buluyorum
-    console.log("LASR RECORD:  " + lastRecord);
     const newID = (parseInt(lastRecord.id)) + 1;                                                    // Son id'li elemanın id'sine 1 ekliyorum
 
     // +1 ID'ye sahip yeni eleman DB'ye ekleniyor
@@ -54,7 +53,7 @@ const createTimeline = asyncErrorWrapper(async (req,res,next) => {
         id : newID
     });
     sendResponseToClient(newTimeline,res);
-    console.log("Console Report:    New timeline created in database successfully with id:" + newID);
+    console.log("Console Report:    New timeline created in database successfully for machine: " + processid + "with id: " + newID);
 });
 
 
@@ -79,7 +78,7 @@ const updateEnd = asyncErrorWrapper(async (req,res,next) => {
 
     const { processid } = req.body;
     const lastRecord = await Timeline.findOne({processid: processid}).sort({ id: -1}).limit(1);     // Request'ten gelen processid'ye sahip elemanlar("D") arasından, son id ye sahip elemanı buluyorum
-
+    // console.log("LAST RECORDS FOR UPDATE" + lastRecord);
     updateWithActualTime(lastRecord,res);
        
 

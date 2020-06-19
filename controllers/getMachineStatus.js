@@ -40,28 +40,29 @@ const createMachineStatus = asyncErrorWrapper(async (req,res,next) => {
 
 const getMachineStatus = asyncErrorWrapper(async (req,res,next) => { 
 
-    const allMachineStates = await MachineState.findOne();
-
-    const { processid } = req.body;
+    const { processid , machine } = req.body;
+    const oneMachineState = await MachineState.findOne();
     const lastRecord = await Timeline.findOne({processid: processid}).sort({ _id: -1}).limit(1);
 
-    if (lastRecord.label === "Kapalı") {
-        oldVal = 0;
+    const _newVal = oneMachineState.Machine[machine];
+
+    if (lastRecord.label == "Kapalı") {
+       _oldVal = 0;
     }   
     if (lastRecord.label == "Bekleme") {
-        oldVal = 1;
+        _oldVal = 1;
     }
     if (lastRecord.label == "Üretim") {
-        oldVal = 2;
+        _oldVal = 2;
     }
     
 
     return res
     .status(200)
     .json({
-        success :   true,
-        old     :   oldVal,
-        data    :   allMachineStates
+        success     :   true,
+        oldVal      :   _oldVal,
+        newVal      :   _newVal
     });
 
     console.log("Console Report:    All Machine States get succesfully done");

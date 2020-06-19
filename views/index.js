@@ -3,6 +3,9 @@
 import {Request} from "./Request.js";    
 const request = new Request();
 
+
+//#region Fusion Chart Settings
+
 const dataSource = {
   chart: {
     caption: "İmalat Takip Sistemi",
@@ -120,62 +123,58 @@ const dataSource = {
   ]
 };
 
+//#endregion
 
 
-
-
-
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  PLC - GET MACHINE STATUS XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
-
-
-
-
+//#region Get PLC Data and Decide
 
 setInterval(() => {
+  getStatus(1,"M1");
+  getStatus(2,"M2");
+  getStatus(3,"M3");
+  getStatus(4,"M4");
+  getStatus(5,"M5");
+  getStatus(6,"M6");
+  getStatus(7,"M7");
+  getStatus(8,"M8");
+  getStatus(9,"M9");
+  getStatus(10,"M10");
+}, 1000);
+
+
+function getStatus(_processid,_machine){
   
   const data = {
-    processid : "4"
+    processid : _processid,
+    machine   : _machine
   };
 
   request.post("https://mgcsolutions.net/api/timeline/getMachineStatus",data)
   .then(async data => {
-    console.log("data:  " + data.data);
-    const allMachineStates = data.data.Machine;
-    const oldVal = data.old;
+    const oldVal = data.oldVal;
+    const newVal = data.newVal;
 
-    console.log("yeni state" + allMachineStates.M4);
-    console.log("eski state" + oldVal);
+    console.log("makine: " +_processid + "oldVal: " + oldVal);
+    console.log("makine: " +_processid + "newVal: " + newVal);
 
-  // DB'deki son timeline record ile plc'den geleni karşılaştırıyorum
-    if (allMachineStates.M4 == oldVal) {
+  // DB'deki son timeline record ile plc'den geleni karşılaştırıyorum 
+    if (newVal == oldVal) {
       console.log("VERİ AYNI : UPDATE");
-      update();
-    } else {
+      update(_processid);
+    } 
+    else {
       console.log("VERİ FARKLI : YENI TIMELINE");
-      createNew(allMachineStates.M4);
-    }
-    
+      createNew(newVal,_processid);
+    }   
   })
   .catch(err => console.log(err));
-}, 2000);
+}
 
-  
-
-
-  
-
-  
+//#endregion
 
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
+//#region REQUEST - GET ALL
 
-
-
-
-
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - GET ALL  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 setInterval(() => {
   request.get("https://mgcsolutions.net/api/timeline/getAll")
   .then(async data => {
@@ -188,31 +187,27 @@ setInterval(() => {
   .catch(err => console.log(err));
 
 }, 1000);
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
+
+//#endregion
 
 
+//#region REQUEST - UPDATE ENDTIME
 
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - UPDATE END TIME  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
-function update(){
+function update(processid){
 
   const data = {
-    processid : "4"
+    processid : processid
   };
 
   request.put("https://mgcsolutions.net/api/timeline/updateEnd",data)
   .then(data => console.log(data))
   .catch(err => console.log(err));
 }
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
+
+//#endregion
 
 
-
-
-
-
-
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  REQUEST - CREATE TIMELINE  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX   //
+//#region REQUEST - CREATE TIMELINE
 
 function createData(newData){
   request.post("https://mgcsolutions.net/api/timeline/create",newData)
@@ -224,7 +219,7 @@ function createData(newData){
   }
 
 
-function createNew(newRecord){
+function createNew(newRecord,processid){
 
   var currentDateTime = new Date();
   
@@ -232,7 +227,7 @@ function createNew(newRecord){
 
      const newData = {
       label       : "Kapalı",
-      processid   : "4",
+      processid   : processid,
       start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
       end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
       bordercolor : "#62B58D",
@@ -245,7 +240,7 @@ function createNew(newRecord){
 
       const newData = {
         label       : "Bekleme",
-        processid   : "4",
+        processid   : processid,
         start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
         end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
         bordercolor : "#62B58D",
@@ -258,7 +253,7 @@ function createNew(newRecord){
 
       const newData = {
       label       : "Üretim",
-      processid   : "4",
+      processid   : processid,
       start       : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
       end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
       bordercolor : "#62B58D",
@@ -269,29 +264,10 @@ function createNew(newRecord){
     
 }
 
+//#endregion
 
 
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
-
-
-
-
-document.getElementById("btnCreateKapalı").addEventListener("click", () => {
-  alert("İlk Kayıt");
-  createFirstTimelines(1);
-  createFirstTimelines(2);
-  createFirstTimelines(3);
-  createFirstTimelines(4);
-  createFirstTimelines(5);
-  createFirstTimelines(6);
-  createFirstTimelines(7);
-  createFirstTimelines(8);
-  createFirstTimelines(9);
-  createFirstTimelines(10);
-
-});
-
+//#region  Create First Timeline For Each Machine
 function createFirstTimelines(processid){
 
   var currentDateTime = new Date();
@@ -303,7 +279,7 @@ function createFirstTimelines(processid){
     bordercolor : "#62B58D",
     color       : "#F2726F",
     id          : "2"
-  };  
+  }; 
 
   request.post("https://mgcsolutions.net/api/timeline/createFirstTimelines",newData)
   .then(async data => {
@@ -311,18 +287,13 @@ function createFirstTimelines(processid){
   console.log(test1); 
   })
   .catch(err => console.log(err));
+
 }
+//#endregion
 
 
+//#region Fusion Chart Call
 
-
-
-
-
-
-
-
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX  FUSION CHART CALL  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 var myChart = new FusionCharts({
   type: "gantt",
   renderAt: "chart-container",
@@ -337,5 +308,5 @@ myChart.render();
 setInterval(() => {
   myChart.setChartData(dataSource);   // dataSource methodunun db'de değiştirdikçe burada render'a gerek kalmadan grafiğin yenilenmesini sağlıyorum
 }, 100);
-// XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX //
 
+//#endregion

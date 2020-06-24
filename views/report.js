@@ -75,95 +75,132 @@ const Machine10 = {
 };
 //#endregion
 
+
+
+
+// Second ==> HH:MM:SS
+async function toTime(second){
+	var date = new Date(0);
+	date.setSeconds(second); // specify value for SECONDS here
+	var timeString = date.toISOString().substr(11, 8);
+	return timeString;
+}
+
+
+
+
+
 //#region REQUEST - GET REPORT
 
 google.charts.load('current', {'packages':['corechart']});
+const Seconds = {
+	machine1 : 0,
+	machine2 : 0
+};
 
 setInterval(() => {
+	
+	
 
 	google.charts.setOnLoadCallback(drawChart);
 
       function drawChart() {
+	
 
 		request.get("https://mgcsolutions.net/api/performance/get")
 		.then(async data => {
 
 		Machine1.machineName.textContent 	= await data.data.machine1.machineName;
 		Machine1.operator.textContent 		= await data.data.machine1.operator;
-		Machine1.calismaSuresi.textContent 	= (await data.data.machine1.calismaSuresi) + "  Saniye";
-		Machine1.beklemeSuresi.textContent 	= await data.data.machine1.beklemeSuresi;
-		Machine1.durmaSuresi.textContent 	= await data.data.machine1.durmaSuresi;
+		Machine1.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine1.calismaSuresi));
+		Machine1.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine1.beklemeSuresi));
+		Machine1.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine1.durmaSuresi));	
 
 		Machine2.machineName.textContent 	= await data.data.machine2.machineName;
 		Machine2.operator.textContent 		= await data.data.machine2.operator;
-		Machine2.calismaSuresi.textContent 	= await data.data.machine2.calismaSuresi;
-		Machine2.beklemeSuresi.textContent 	= await data.data.machine2.beklemeSuresi;
-		Machine2.durmaSuresi.textContent 	= await data.data.machine2.durmaSuresi;
-
+		Machine2.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine2.calismaSuresi));	
+		Machine2.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine2.beklemeSuresi));
+		Machine2.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine2.durmaSuresi));	
+			
 		Machine3.machineName.textContent 	= await data.data.machine3.machineName;
 		Machine3.operator.textContent 		= await data.data.machine3.operator;
-		Machine3.calismaSuresi.textContent 	= await data.data.machine3.calismaSuresi;
-		Machine3.beklemeSuresi.textContent 	= await data.data.machine3.beklemeSuresi;
-		Machine3.durmaSuresi.textContent 	= await data.data.machine3.durmaSuresi;
+		Machine3.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine3.calismaSuresi));	
+		Machine3.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine3.beklemeSuresi));
+		Machine3.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine3.durmaSuresi));	
 
 		Machine4.machineName.textContent 	= await data.data.machine4.machineName;
 		Machine4.operator.textContent 		= await data.data.machine4.operator;
-		Machine4.calismaSuresi.textContent 	= await data.data.machine4.calismaSuresi;
-		Machine4.beklemeSuresi.textContent 	= await data.data.machine4.beklemeSuresi;
-		Machine4.durmaSuresi.textContent 	= await data.data.machine4.durmaSuresi;
+		Machine4.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine4.calismaSuresi));	
+		Machine4.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine4.beklemeSuresi));
+		Machine4.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine4.durmaSuresi));	
 
 		Machine5.machineName.textContent 	= await data.data.machine5.machineName;
 		Machine5.operator.textContent 		= await data.data.machine5.operator;
-		Machine5.calismaSuresi.textContent 	= await data.data.Machine5.calismaSuresi;
-		Machine5.beklemeSuresi.textContent 	= await data.data.machine5.beklemeSuresi;
-		Machine5.durmaSuresi.textContent 	= await data.data.machine5.durmaSuresi;
+		Machine5.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine5.calismaSuresi));	
+		Machine5.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine5.beklemeSuresi));
+		Machine5.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine5.durmaSuresi));	
 
 		Machine6.machineName.textContent 	= await data.data.machine6.machineName;
 		Machine6.operator.textContent 		= await data.data.machine6.operator;
-		Machine6.calismaSuresi.textContent 	= await data.data.machine6.calismaSuresi;
-		Machine6.beklemeSuresi.textContent 	= await data.data.machine6.beklemeSuresi;
-		Machine6.durmaSuresi.textContent 	= await data.data.machine6.durmaSuresi;
+		Machine6.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine6.calismaSuresi));	
+		Machine6.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine6.beklemeSuresi));
+		Machine6.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine6.durmaSuresi));	
 
 		Machine7.machineName.textContent 	= await data.data.machine7.machineName;
 		Machine7.operator.textContent 		= await data.data.machine7.operator;
-		Machine7.calismaSuresi.textContent 	= await data.data.machine7.calismaSuresi;
-		Machine7.beklemeSuresi.textContent 	= await data.data.machine7.beklemeSuresi;
-		Machine7.durmaSuresi.textContent 	= await data.data.machine7.durmaSuresi;
+		Machine7.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine7.calismaSuresi));	
+		Machine7.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine7.beklemeSuresi));
+		Machine7.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine7.durmaSuresi));	
 
 		Machine8.machineName.textContent 	= await data.data.machine8.machineName;
 		Machine8.operator.textContent 		= await data.data.machine8.operator;
-		Machine8.calismaSuresi.textContent 	= await data.data.machine8.calismaSuresi;
-		Machine8.beklemeSuresi.textContent 	= await data.data.machine8.beklemeSuresi;
-		Machine8.durmaSuresi.textContent 	= await data.data.machine8.durmaSuresi;
+		Machine8.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine8.calismaSuresi));	
+		Machine8.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine8.beklemeSuresi));
+		Machine8.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine8.durmaSuresi));	
 
 		Machine9.machineName.textContent 	= await data.data.machine9.machineName;
 		Machine9.operator.textContent 		= await data.data.machine9.operator;
-		Machine9.calismaSuresi.textContent 	= await data.data.machine9.calismaSuresi;
-		Machine9.beklemeSuresi.textContent 	= await data.data.machine9.beklemeSuresi;
-		Machine9.durmaSuresi.textContent 	= await data.data.machine9.durmaSuresi;
+		Machine9.calismaSuresi.textContent 	= await toTime(parseInt(data.data.machine9.calismaSuresi));	
+		Machine9.beklemeSuresi.textContent 	= await toTime(parseInt(data.data.machine9.beklemeSuresi));
+		Machine9.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine9.durmaSuresi));	
 
 		Machine10.machineName.textContent 	= await data.data.machine10.machineName;
 		Machine10.operator.textContent 		= await data.data.machine10.operator;
-		Machine10.calismaSuresi.textContent = await data.data.machine10.calismaSuresi;
-		Machine10.beklemeSuresi.textContent = await data.data.machine10.beklemeSuresi;
-		Machine10.durmaSuresi.textContent 	= await data.data.machine10.durmaSuresi;
+		Machine10.calismaSuresi.textContent = await toTime(parseInt(data.data.machine10.calismaSuresi));	
+		Machine10.beklemeSuresi.textContent = await toTime(parseInt(data.data.machine10.beklemeSuresi));
+		Machine10.durmaSuresi.textContent 	= await toTime(parseInt(data.data.machine10.durmaSuresi));	
+
+		
+
+		Seconds.machine1 = await data.data.machine1.calismaSuresi;
+		Seconds.machine2 = await data.data.machine2.calismaSuresi;
+		Seconds.machine3 = await data.data.machine3.calismaSuresi;
+		Seconds.machine4 = await data.data.machine4.calismaSuresi;
+		Seconds.machine5 = await data.data.machine5.calismaSuresi;
+		Seconds.machine6 = await data.data.machine6.calismaSuresi;
+		Seconds.machine7 = await data.data.machine7.calismaSuresi;
+		Seconds.machine8 = await data.data.machine8.calismaSuresi;
+		Seconds.machine9 = await data.data.machine9.calismaSuresi;
+		Seconds.machine10 = await data.data.machine10.calismaSuresi;
+		
 	})	
 	.catch(err => console.log(err));
 
 
 
     var data = google.visualization.arrayToDataTable([
-        ['Task', 'Hours per Day'],
-        [ Machine1.machineName.textContent + ' Op: ' +  Machine1.operator.textContent, 11],
-        ['Makine 2   Can Bayraker', 2],
-        ['Makine 3   Can Bayraker', 2],
-        ['Makine 4', 2],
-		['Makine 5', 7],
-		['Makine 6', 7],
-		['Makine 7', 5],
-		['Makine 8', 6],
-		['Makine 9', 8],
-		['Makine 10', 11]
+		['Task', 'Hours per Day'],
+		// ['Op:', 11], ÖRNEK
+        [Machine1.machineName.textContent + ' Op: ' +  Machine1.operator.textContent, Seconds.machine1],
+        [Machine2.machineName.textContent + ' Op: ' +  Machine2.operator.textContent, Seconds.machine2],
+        [Machine3.machineName.textContent + ' Op: ' +  Machine3.operator.textContent, Seconds.machine3],
+        [Machine4.machineName.textContent + ' Op: ' +  Machine4.operator.textContent, Seconds.machine4],
+		[Machine5.machineName.textContent + ' Op: ' +  Machine5.operator.textContent, Seconds.machine5],
+		[Machine6.machineName.textContent + ' Op: ' +  Machine6.operator.textContent, Seconds.machine6],
+		[Machine7.machineName.textContent + ' Op: ' +  Machine7.operator.textContent, Seconds.machine7],
+		[Machine8.machineName.textContent + ' Op: ' +  Machine8.operator.textContent, Seconds.machine8],
+		[Machine9.machineName.textContent + ' Op: ' +  Machine9.operator.textContent, Seconds.machine9],
+		[Machine10.machineName.textContent + ' Op: ' +  Machine10.operator.textContent, Seconds.machine10]
 		  
     ]);
 

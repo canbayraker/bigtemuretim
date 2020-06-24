@@ -21,7 +21,8 @@
     "nodemon": "^2.0.4",
     "nodes7": "^0.3.11",
     "nodes7comm": "^1.0.3",
-    "s7client": "^1.0.6"
+    "s7client": "^1.0.6",
+    "tabulator-tables": "^4.6.3"
   },
   "repository": {
     "type": "git",

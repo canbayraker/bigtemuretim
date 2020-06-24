@@ -128,20 +128,19 @@ const dataSource = {
 
 //#region Get PLC Data and Decide
 
-setInterval(() => {
-  getStatus(1,"M1");
-  getStatus(2,"M2");
-  getStatus(3,"M3");
-  getStatus(4,"M4");
-  getStatus(5,"M5");
-  getStatus(6,"M6");
-  getStatus(7,"M7");
-  getStatus(8,"M8");
-  getStatus(9,"M9");
-  getStatus(10,"M10");
-}, 1000);
-
-
+  setInterval(() => {
+    getStatus(1,"M1");
+    getStatus(2,"M2");
+    getStatus(3,"M3");
+    getStatus(4,"M4");
+    getStatus(5,"M5");
+    getStatus(6,"M6");
+    getStatus(7,"M7");
+    getStatus(8,"M8");
+    getStatus(9,"M9");
+    getStatus(10,"M10");
+  }, 100);
+  
 function getStatus(_processid,_machine){
   
   const data = {
@@ -186,7 +185,7 @@ setInterval(() => {
   })
   .catch(err => console.log(err));
 
-}, 1000);
+}, 100);
 
 //#endregion
 
@@ -268,6 +267,23 @@ function createNew(newRecord,processid){
 
 
 //#region  Create First Timeline For Each Machine
+
+
+document.getElementById("btnCrateFirsts").addEventListener("click", () => {
+  createFirstTimelines(1);
+  createFirstTimelines(2);
+  createFirstTimelines(3);
+  createFirstTimelines(4);
+  createFirstTimelines(5);
+  createFirstTimelines(6);
+  createFirstTimelines(7);
+  createFirstTimelines(8);
+  createFirstTimelines(9);
+  createFirstTimelines(10);
+})
+
+
+
 function createFirstTimelines(processid){
 
   var currentDateTime = new Date();
@@ -278,7 +294,7 @@ function createFirstTimelines(processid){
     end         : "1-1-2000 " + currentDateTime.getHours() + ":" + currentDateTime.getMinutes() + ":" + currentDateTime.getSeconds(),
     bordercolor : "#62B58D",
     color       : "#F2726F",
-    id          : "2"
+    id          : "1"
   }; 
 
   request.post("https://mgcsolutions.net/api/timeline/createFirstTimelines",newData)

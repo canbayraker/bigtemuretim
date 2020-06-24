@@ -32,7 +32,7 @@ app.use("/api",routers);
 //Static Files
 app.use(express.static(path.join(__dirname, "views")));
 app.use('/index.js', express.static(path.join(__dirname, '/views/index.js'))); 
-app.use('/endDayReport.js', express.static(path.join(__dirname, '/views/endDayReport.js'))); 
+app.use('/report.js', express.static(path.join(__dirname, '/views/report.js'))); 
 
 app.listen(PORT, () => {
     console.log(`App Started on ${PORT} : ${process.env.NODE_ENV}`);

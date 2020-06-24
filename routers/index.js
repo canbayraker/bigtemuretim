@@ -1,10 +1,10 @@
 const express = require("express");
 const timeline = require("./timeline");
-const endDayReport = require("./endDayReport");
+const performanceTable = require("./performanceTable");
 const router = express();
 
 router.use("/timeline",timeline);
-//router.use("/endDayReport",endDayReport);
+router.use("/performance",performanceTable);
 
 
 module.exports = router;

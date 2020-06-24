@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>Bigtem Makine - Üretim Takibi</title>
+
+<script type="text/javascript"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+    <link rel="stylesheet" href="report.css">
+
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  </head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Bigtem Makine</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="report.html">Report <span class="sr-only">(current)</span></a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link disabled" href="#">Disabled</a>
+            </li> -->
+          </ul>
+          <form class="form-inline my-2 my-lg-0">
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search"> -->
+            <button class="btn btn-outline-success my-2 my-sm-0" id="btnExport" type="submit">Export</button>
+          </form>
+        </div>
+      </nav>
+
+
+
+
+      <!-- BOOTSTRAP TABLE -->
+      <div>
+        <table class="table" data-toggle="table" id="idReport">
+            <thead>
+              <tr>
+                <th style="width: 20%">Makine</th>
+                <th style="width: 20%">Operatör</th>
+                <th style="width: 20%">Çalışma Süresi</th>
+                <th style="width: 20%">Bekleme Süresi</th>
+                <th style="width: 20%">Durma Süresi</th>
+              </tr>
+            </thead>
+            <tbody class="tbody-dark">
+              <tr>
+                <td id="M1_machineName">DEFAULT</td>
+                <td id="M1_operator">DEFAULT</td>
+                <td id="M1_calismaSuresi">DEFAULT</td>
+                <td id="M1_beklemeSuresi">DEFAULT</td>
+                <td id="M1_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M2_machineName">DEFAULT</td>
+                <td id="M2_operator">DEFAULT</td>
+                <td id="M2_calismaSuresi">DEFAULT</td>
+                <td id="M2_beklemeSuresi">DEFAULT</td>
+                <td id="M2_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M3_machineName">DEFAULT</td>
+                <td id="M3_operator">DEFAULT</td>
+                <td id="M3_calismaSuresi">DEFAULT</td>
+                <td id="M3_beklemeSuresi">DEFAULT</td>
+                <td id="M3_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M4_machineName">DEFAULT</td>
+                <td id="M4_operator">DEFAULT</td>
+                <td id="M4_calismaSuresi">DEFAULT</td>
+                <td id="M4_beklemeSuresi">DEFAULT</td>
+                <td id="M4_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M5_machineName">DEFAULT</td>
+                <td id="M5_operator">DEFAULT</td>
+                <td id="M5_calismaSuresi">DEFAULT</td>
+                <td id="M5_beklemeSuresi">DEFAULT</td>
+                <td id="M5_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M6_machineName">DEFAULT</td>
+                <td id="M6_operator">DEFAULT</td>
+                <td id="M6_calismaSuresi">DEFAULT</td>
+                <td id="M6_beklemeSuresi">DEFAULT</td>
+                <td id="M6_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M7_machineName">DEFAULT</td>
+                <td id="M7_operator">DEFAULT</td>
+                <td id="M7_calismaSuresi">DEFAULT</td>
+                <td id="M7_beklemeSuresi">DEFAULT</td>
+                <td id="M7_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M8_machineName">DEFAULT</td>
+                <td id="M8_operator">DEFAULT</td>
+                <td id="M8_calismaSuresi">DEFAULT</td>
+                <td id="M8_beklemeSuresi">DEFAULT</td>
+                <td id="M8_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M9_machineName">DEFAULT</td>
+                <td id="M9_operator">DEFAULT</td>
+                <td id="M9_calismaSuresi">DEFAULT</td>
+                <td id="M9_beklemeSuresi">DEFAULT</td>
+                <td id="M9_durmaSuresi">DEFAULT</td>
+              </tr>
+              <tr>
+                <td id="M10_machineName">DEFAULT</td>
+                <td id="M10_operator">DEFAULT</td>
+                <td id="M10_calismaSuresi">DEFAULT</td>
+                <td id="M10_beklemeSuresi">DEFAULT</td>
+                <td id="M10_durmaSuresi">DEFAULT</td>
+              </tr>
+              
+              
+            </tbody>
+          </table>
+      </div>
+
+
+      <!-- <div class="container">
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div> -->
+
+      <div class="container" id="piechart" style="width: 1000px; height: 400px;"></div>
+
+
+    <script type="module" src="Request.js"></script>
+    <script type="module" src="report.js"></script>
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+</body>
+</html>

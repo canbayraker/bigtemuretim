@@ -46,15 +46,22 @@ const getMachineStatus = asyncErrorWrapper(async (req,res,next) => {
 
     const _newVal = oneMachineState.Machine[machine];
 
-    if (lastRecord.label == "Kapalı") {
-       _oldVal = 0;
-    }   
-    if (lastRecord.label == "Bekleme") {
-        _oldVal = 1;
-    }
-    if (lastRecord.label == "Üretim") {
-        _oldVal = 2;
-    }
+
+
+        if (lastRecord.label == "Kapalı") {
+            _oldVal = 0;
+         }   
+         if (lastRecord.label == "Bekleme") {
+             _oldVal = 1;
+         }
+         if (lastRecord.label == "Üretim") {
+             _oldVal = 2;
+         }
+
+
+    
+
+    
     
 
     return res

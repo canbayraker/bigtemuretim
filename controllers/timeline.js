@@ -53,7 +53,7 @@ const createTimeline = asyncErrorWrapper(async (req,res,next) => {
         id : newID
     });
     sendResponseToClient(newTimeline,res);
-    console.log("Console Report:    New timeline created in database successfully for machine: " + processid + "with id: " + newID);
+    console.log("Console Report:    New timeline created in database successfully for machine: " + processid + "  with id: " + newID);
 });
 
 

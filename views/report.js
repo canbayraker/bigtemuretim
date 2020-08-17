@@ -2,6 +2,8 @@
 import {Request} from "./Request.js";    
 const request = new Request();
 
+
+
 //#region DOM
 const Machine1 = {
 	machineName				: document.getElementById("M1_machineName"),
@@ -217,4 +219,72 @@ setInterval(() => {
 
 //#endregion
 
-      
+
+
+
+
+function fnExcelReport(id){
+
+	// let start_string=start.replace(/\./g, "_");
+	// let end_string=end.replace(/\./g, "_");
+
+	let tbl = document.getElementById(id);
+  
+	let worksheet_tmp1 = XLSX.utils.table_to_sheet(tbl);
+  
+	let a = XLSX.utils.sheet_to_json(worksheet_tmp1, { header: 1 });
+  
+	let worksheet = XLSX.utils.json_to_sheet(a, { skipHeader: true });
+  
+	const new_workbook = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(new_workbook, worksheet, "Excel Sheet 1");
+	XLSX.writeFile(new_workbook, 'excelciktisi.xlsx');
+  }
+
+
+  document.getElementById("btnExport").addEventListener("click", () => {
+	fnExcelReport('idReport');
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+// $(document).ready(function() {
+// 	var table = $('#idReport').DataTable( {
+// 		lengthChange: false,
+// 		buttons: [ 'copy', 'excel', 'csv', 'pdf', 'colvis' ]
+// 	} );
+ 
+// 	table.buttons().container()
+// 		.appendTo( '#example_wrapper .col-md-6:eq(0)' );
+// });
+
+
+
+
+// $(function() {
+// 	$("#btnExport").click(function(e){
+// 	var table = $("#idReport");
+// 	if(table && table.length){
+// 	$(table).table2excel({
+// 	exclude: ".noExl",
+// 	name: "Excel Document Name",
+// 	filename: "BBBootstrap" + new Date().toISOString().replace(/[\-\:\.]/g, "") + ".xls",
+// 	fileext: ".xls",
+// 	exclude_img: true,
+// 	exclude_links: true,
+// 	exclude_inputs: true,
+// 	preserveColors: false
+// 	});
+// 	}
+// 	});
+	
+// 	});
